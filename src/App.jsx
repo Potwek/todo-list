@@ -37,6 +37,11 @@ function TodoList() {
         setTasks(updatedTasks);
     };
 
+    const removeTask = (index) => {
+        const updatedTasks = tasks.filter((task, taskIndex) => taskIndex !== index);
+        setTasks(updatedTasks);
+    };
+
     const filteredTasks = tasks.filter(task => {
         if (filter === 'Completed') return task.completed;
         if (filter === 'Pending') return !task.completed;
@@ -63,7 +68,7 @@ function TodoList() {
                                 <input 
                                     type="text" 
                                     value={editText} 
-                                    onChange={(e) => setEditText(e.target.value)}
+                                    onChange={(e) => setEditText(e.target.value)} 
                                 />
                                 <button onClick={() => saveEdit(index)}>Save</button>
                                 <button onClick={() => setEditingIndex(null)}>Cancel</button>
@@ -72,6 +77,11 @@ function TodoList() {
                             <>
                                 <span className={task.completed ? 'completed-task' : ''}>{task.text}</span> 
                                 <button onClick={() => startEditing(index)}>Edit</button>
+                                {task.completed && (
+                                    <button onClick={() => removeTask(index)} className="remove-btn">
+                                        Remove
+                                    </button>
+                                )}
                             </>
                         )}
                     </li>
